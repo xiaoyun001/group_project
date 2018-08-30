@@ -5,13 +5,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// 引入 express-session 中间件
-// const session = require("express-session");
+ // 引入express-session中间件
+ const session = require("express-session");
 
 // 路由中间件
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const inboundRouter = require('./routes/inbound.js');
+var captchaRouter = require('./routes/captcha.js');
 
 // 创建 Express 应用实例
 var app = express();
@@ -24,8 +25,15 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-
+app.use(cookieParser("xm"));
+//session配置：使用express-session中间件
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'xm',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {  maxAge: 45*60*1000  }
+}));
 // 指明静态资源存放位置
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -34,6 +42,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 // 访问inbound目录下资源
 app.use('/inbound', inboundRouter); 
+app.use('/captcha',captchaRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

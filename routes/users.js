@@ -1,9 +1,12 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
+const UserService = require("../services/user_service.js");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// 用户注册
+router.post('/register',UserService.register);
+
+// 用户登录
+router.post('/login',UserService.login);
 
 module.exports = router;
+

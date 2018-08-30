@@ -9,29 +9,37 @@
 <body>
 
     <h1 style="text-align: center;margin-top: 74px;margin-bottom: 37px;">欢迎使用进销存后台管理系统</h1>
-  <div class="container" style="width: 400px;background: #ccc;height: 260px;padding: 19px;">
+  <div class="container" style="width: 400px;background: #ccc;height: auto;padding: 19px;">
  
- <form>
+ <form class="login-form">
   <div class="form-group">
     <label for="loginUsernme">用户名</label>
-    <input type="text" class="form-control" id="loginUsernme" placeholder="请输入用户名">
+    <input type="text" class="form-control" id="loginUsernme" placeholder="请输入用户名" name="username">
   </div>
   <div class="form-group">
     <label for="loginPassword">密码</label>
-    <input type="password" class="form-control" id="loginPassword" placeholder="请输入密码">
+    <input type="password" class="form-control" id="loginPassword" placeholder="请输入密码" name="password">
   </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> 记住我
-    </label>
-  </div>
-  <button type="button" class="btn btn-primary">登录</button>
+  <div class="form-group">
+          <label for="loginCode">验证码</label>
+                <input type="text" class="form-control" id="loginCode" placeholder="请输入验证码">
+          <p class="help-block code-img">这是个验证码图片</p>
+        </div>
+         <div class="alert alert-warning alert-dismissible" role="alert" id="login-info" style="display:none;">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Warning!</strong> 验证码输入有误
+              </div>
+        <div class="alert alert-warning alert-dismissible" role="alert" id="loginErr-info" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> 用户名或密码错误
+    </div>
+  <button type="button" class="btn btn-primary btn-login">登录</button>
   <a href="/html/register.html" style="float: right;">没有账号，立即注册</a>
 </form>
 </div> 
-   <script src="lib/jquery/jquery-1.12.4.min.js"></script>
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/login.js"></script>
+   <script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/login.js"></script>
     
 </body>
 </html>

@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 // 连接数据库
 mongoose.connect('mongodb://localhost/proj_group');
 
+// 用户模型
+const User = mongoose.model('admin', { 
+    username: String,
+    password: String,
+ });
+
 // 职位模型
 const Inbound = mongoose.model("inbound", {
     name: String,
@@ -11,4 +17,4 @@ const Inbound = mongoose.model("inbound", {
     date: String
 });
 
-module.exports = {Inbound};
+module.exports = {User,Inbound};

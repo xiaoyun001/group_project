@@ -9,24 +9,38 @@
 <body>
 
     <h1 style="text-align: center;margin-top: 74px;margin-bottom: 37px;">欢迎注册进销存后台管理系统</h1>
-  <div class="container" style="width: 400px;background: #ccc;height: 260px;padding: 19px;">
+  <div class="container" style="width: 400px;background: #ccc;height: auto;padding: 19px;">
  
- <form>
+ <form class="register-form">
   <div class="form-group">
     <label for="registerUsernme">用户名</label>
-    <input type="text" class="form-control" id="registerUsernme" placeholder="请输入用户名">
+    <input type="text" class="form-control" id="registerUsernme" placeholder="请输入用户名" name="username">
   </div>
   <div class="form-group">
     <label for="registerPassword">密码</label>
-    <input type="password" class="form-control" id="registerPassword" placeholder="请输入密码">
+    <input type="password" class="form-control" id="registerPassword" placeholder="请输入密码" name="password">
   </div>
-  <button type="button" class="btn btn-primary">注册</button>
+    <div class="form-group">
+        <label for="registerCode">验证码</label>
+        <input type="text" class="form-control" id="registerCode" placeholder="请输入验证码">
+        <p class="help-block code-img">这是个验证码图片</p>
+
+    </div>
+    <div class="alert alert-warning alert-dismissible" role="alert" id="register-info" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> 验证码输入有误
+    </div>
+    <div class="alert alert-warning alert-dismissible" role="alert" id="registerErr-info" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> 注册失败
+    </div>
+  <button type="button" class="btn btn-primary btn-register">注册</button>
   <a href="/html/login.html" style="float: right;">已有账号，去登陆</a>
 </form>
 </div> 
-   <script src="lib/jquery/jquery-1.12.4.min.js"></script>
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/login.js"></script>
+   <script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/register.js"></script>
     
 </body>
 </html>
