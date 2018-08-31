@@ -43,8 +43,7 @@ $.extend(Login.prototype, {
 		// 待传递到服务器的用户数据登录
 		var data=$(".login-form").serialize();
 		console.log(data);
-        console.log($("#limenuitem"));
-        console.log($(".indexInfo"));
+        
 		// ajax提交登录处理
 		$.post("/users/login",data,function(resdata){
             console.log(resdata);
@@ -55,7 +54,9 @@ $.extend(Login.prototype, {
             }else{
             	$("#loginErr-info").show();
             }
-		});
+		  });
+
+        
 	}
 
 
