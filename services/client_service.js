@@ -1,13 +1,13 @@
-const InboundDao = require("../dao/inbound_dao.js");
+const ClientDao = require("../dao/client_dao.js");
 
-const InboundService = {
-    // 添加商品
+const ClientService = {
+    // 添加客户
     add(req, res, next) {
         // 从请求主体中解构文本数据
-        const {name, sort, count, date,remark} = req.body;
+        const {username,name,sex,phone,place,email,remark} = req.body;
         // 保存到数据库
-        InboundDao
-            .save({name, sort, count, date,remark})
+        ClientDao
+            .save({username,name,sex,phone,place,email,remark})
             .then(data=>{
                 res.json({res_code:1, res_error:"", res_body: data})
             })
@@ -15,12 +15,12 @@ const InboundService = {
                 res.json({res_code:-1, res_error:err, res_body: {}})
             });
     },
-    // 删除商品
+    // 删除客户
     delete(req, res, next) {
         // 从请求主体中解构文本数据
         const {id} = req.body;
         // 保存到数据库
-        InboundDao
+        ClientDao
             .delete(id)
             .then(data=>{
                 res.json({res_code:1, res_error:"", res_body: data})
@@ -29,13 +29,13 @@ const InboundService = {
                 res.json({res_code:-1, res_error:err, res_body: {}})
             });
     },
-    // 查询修改商品
+    // 查询修改客户
     findById(req, res, next) {
         // 从请求主体中解构文本数据
         const {id} = req.query;
         console.log(id);
         // 保存到数据库
-        InboundDao
+        ClientDao
             .findById(id)
             .then(data=>{
                 res.json({res_code:1, res_error:"", res_body: data});
@@ -43,13 +43,14 @@ const InboundService = {
                 res.json({res_code:-1, res_error:err, res_body: {}});
             });
     },
+
     //根据id修改
     update(req,res,next){
 
-        const info = {name, sort, count, date,remark} = req.body;
+        const info = {id,username,name,sex,phone,place,email,remark} = req.body;
         //保存到数据库
         console.log(info)
-         InboundDao.update(info)
+        ClientDao.update(info)
         .then(data=>{
             res.json({res_code:1, res_error:"", res_body: data})
         })
@@ -58,20 +59,20 @@ const InboundService = {
         });
     },
 
-    // 分页查询商品
+    // 分页查询客户信息
     listByPage(req, res, next) {
         // 获取待查询的页码
         let {page} = req.query;
         page = page || 1;
         // 调用数据库查询方法
-        InboundDao
+        ClientDao
             .count()
             .then((data)=>{
-                InboundDao
+                ClientDao
                     .findByPage(page)
                     .then(pageData=>{
                         // 总页数
-                        const totalPages = Math.ceil(data / 10);
+                        const totalPages = Math.ceil(data / 12);
                         res.json({res_code:1, res_error:"", res_body: {data: pageData, count: data, totalPages}});
                     }).catch(err=>{
                         res.json({res_code:-1, res_error:err, res_body: {}});
@@ -83,4 +84,4 @@ const InboundService = {
     }
 }
 
-module.exports = InboundService;
+module.exports = ClientService;

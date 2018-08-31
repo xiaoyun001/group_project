@@ -7,6 +7,7 @@ function Inbound() {
 Inbound.listInfoTemplate = `
                  <% for (var i = 0; i < inbound.length; i++) { %> 
                 <tr>
+                <td style="display:none;"><%= inbound[i]._id %></td>
                 <td><%= i+1 %></td>
                 <td><%= inbound[i].name %></td>
                 <td><%= inbound[i].sort %></td>
@@ -27,9 +28,39 @@ $.extend(Inbound.prototype, {
     // 注册事件监听 
     addListener() {
         // 添加分类
-        $(".am-btn").on("click", this.addInboundHandler);
+        $(".add-btn").on("click", this.addInboundHandler);
         // 翻页
         $(".pagination").on("click", "li", this.loadByPage);
+        // 点击编辑获取当前数据
+        $("#tbRecord").on("click",".edit",this.findByIdInboundHandler);
+        // 点击确认修改对商品入库信息进行编辑
+        $(".update-btn").on("click",this.updateInboundHandler);
+        // 删除
+        $("#tbRecord").on("click",".delete",function(){
+            const id = $(this).siblings().first().text();
+           console.log(id);
+           $.jq_Confirm({
+            message: "您确定要删除吗?",
+            btnOkClick: function() {
+
+            $.post("/inbound/delete", {id:id}, (resdata)=>{
+            console.log(resdata);
+            if (resdata.res_code===1) {
+                // alert("删除成功");
+                 location = "/html/inbound.html";
+            }else{
+                alert("删除出错");
+            }
+
+        }, "json");
+}
+                    }); 
+           
+           
+            
+
+
+        });
     },
 
     // 页面加载
@@ -65,12 +96,13 @@ $.extend(Inbound.prototype, {
     
     // 添加入库商品
     addInboundHandler() {
-        const data = $(".am-form").serialize();
+        const data = $(".add-form").serialize();
         console.log(data);
         $.post("/inbound/add", data, (resdata)=>{
             console.log(resdata);
             if (resdata.res_code===1) {
                 alert("添加成功");
+                location = "/html/inbound.html";
             }else{
                 alert("添加出错");
             }
@@ -78,6 +110,48 @@ $.extend(Inbound.prototype, {
         }, "json");
 
         
+    },
+    // 获取修改商品数据
+    findByIdInboundHandler(){
+        console.log(1);
+        $(".updateBar").addClass("on").siblings().removeClass("on");
+          $(".updateBar").show();
+          $("#inboundOut").show();
+          $("#inboundIn").hide();
+          $("#inboundIndex").hide();
+          
+          const id = $(this).siblings().first().text();
+           console.log(id);
+         // 读取数据
+        $.getJSON("/inbound/find?id=" + id, data=>{
+            console.log(data);
+            // 显示用户数据
+           
+            // 将响应数据显示到表单中
+            $(".updateId").val(data.res_body._id);
+            $(".updateName").val(data.res_body.name);
+            $(".updateSort").val(data.res_body.sort);
+            $(".updateCount").val(data.res_body.count);
+            $(".updateDate").val(data.res_body.date);
+            $(".updateRemark").val(data.res_body.remark);
+        });
+    },
+
+    // 修改商品入库信息
+    updateInboundHandler(){
+        console.log(1);
+        const data = $(".update-form").serialize();
+        console.log(data);
+        $.post("/inbound/update", data, (resdata)=>{
+            console.log(resdata);
+            if (resdata.res_code===1) {
+                alert("修改成功");
+                location = "/html/inbound.html";
+            }else{
+                alert("修改出错");
+            }
+
+        }, "json"); 
     }
 });
 

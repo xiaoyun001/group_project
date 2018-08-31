@@ -9,12 +9,24 @@ const User = mongoose.model('admin', {
     password: String,
  });
 
-// 职位模型
+// 入库模型
 const Inbound = mongoose.model("inbound", {
     name: String,
     sort: String,
     count: Number,
-    date: String
+    date: String,
+    remark:String
 });
 
-module.exports = {User,Inbound};
+// 客户模型
+const Client = mongoose.model("client", {
+    username:String,
+    name: String,
+    sex: String,
+    phone: Number,
+    place:String,
+    email: String,
+    remark:String
+});
+
+module.exports = {User,Inbound,Client};

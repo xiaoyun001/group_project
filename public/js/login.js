@@ -20,7 +20,7 @@ $.extend(Login.prototype, {
 	// 生成验证码
    genCaptchaHandler:function(){
    	  $.get("/captcha/gencode",(data)=>{
-   	  	console.log(data);
+   	  	// console.log(data);
            $(".code-img").html(data);
    	  },"text");
    },
@@ -29,7 +29,7 @@ $.extend(Login.prototype, {
 	// 获取文本框中输入的验证码
 	 var code=$("#loginCode").val();
 	 $.getJSON("/captcha/verify",{code},(data)=>{
-	 	console.log(data);
+	 	// console.log(data);
 	 	if(data.res_code===1){
 
 	 		$("#login-info").hide();
@@ -43,13 +43,15 @@ $.extend(Login.prototype, {
 		// 待传递到服务器的用户数据登录
 		var data=$(".login-form").serialize();
 		console.log(data);
+        console.log($("#limenuitem"));
+        console.log($(".indexInfo"));
 		// ajax提交登录处理
 		$.post("/users/login",data,function(resdata){
             console.log(resdata);
             if (resdata.res_code === 1) {
-            	$(".limenuitem").show();
-            	$(".indexInfo").hide();
-            	location = "/html/type.html";
+            // 将登录成功的用户信息保存起来，保存到 sessionStorage 中
+               sessionStorage.loginUser = JSON.stringify(resdata.res_body);
+            	location = "/html/inbound.html";
             }else{
             	$("#loginErr-info").show();
             }

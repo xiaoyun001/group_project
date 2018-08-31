@@ -17,6 +17,9 @@ const UserService={
           // 比较密码是否正确
           if (bcrypt.compareSync(password,_pass)) {
             // 正确
+            // 在session中保存登录成功的用户信息
+            req.session.loginUser = username;
+            // 返回响应
             res.json({res_code:1,res_error:"",res_body:data[0]});
           }else{
             // 错误
@@ -30,6 +33,10 @@ const UserService={
         res.json({res_code:-1,res_error:err,res_body:{}});
       });
     },
+    logout(req, res, next) {
+    req.session.loginUser = null;
+    res.json({res_code:1, res_error:"", res_body:{status: true}});
+     },
     register:function(req,res,next){
       // 获取在请求中传递的注册用户信息
       const {username,password} = req.body;

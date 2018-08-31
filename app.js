@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const inboundRouter = require('./routes/inbound.js');
 var captchaRouter = require('./routes/captcha.js');
+const clientRouter = require('./routes/client.js');
 
 // 创建 Express 应用实例
 var app = express();
@@ -43,6 +44,7 @@ app.use('/users', usersRouter);
 // 访问inbound目录下资源
 app.use('/inbound', inboundRouter); 
 app.use('/captcha',captchaRouter);
+app.use('/client',clientRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

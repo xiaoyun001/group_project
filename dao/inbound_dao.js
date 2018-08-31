@@ -11,25 +11,25 @@ const InboundDao = {
     },
     // 按页查找职位信息
     findByPage(page) {
-        // 假定每页显示5条数据
-        const pageSize = 5;
+        // 假定每页显示10条数据
+        const pageSize = 10;
         // 查询
         return Inbound.find().skip((page-1)*pageSize).limit(pageSize);
-
-        /*const query = Position.find(); // 查询结果集
-        const count = query.count(); // 文档总条数
-        const totalPages = Math.ceil(count / pageSize); // 总页数
-        const positions = query.skip((page-1)*pageSize).limit(pageSize); // 当页职位数据
-        // 返回总记录条数、总页数与当前页职位数据
-        return {count, totalPages, positions};*/
     },
-    update() {
-
+     // 查找商品信息
+    findById(inboundInfo) {
+        // 查询
+        return Inbound.findById(inboundInfo);
+    },
+    //修改指定id商品
+    update(inboundInfo){
+        return Inbound.findByIdAndUpdate(inboundInfo.id,{$set:inboundInfo},{new: true});
     },
     find() {
 
     },
-    delete() {
+    delete(inboundInfo) {
+        return Inbound.findByIdAndRemove(inboundInfo);
 
     }
 }

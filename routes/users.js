@@ -8,5 +8,9 @@ router.post('/register',UserService.register);
 // 用户登录
 router.post('/login',UserService.login);
 
+
+router.get("/logout", UserService.logout);
+
+
 module.exports = router;
 
